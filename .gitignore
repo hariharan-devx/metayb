@@ -1,3 +1,18 @@
-**/node_modules/
-**/.env
-server/assets
+# dependencies
+node_modules/
+
+# env
+.env
+.env.*
+
+# logs
+logs
+*.log
+
+# build
+dist
+build
+
+# uploads / assets
+server/assets/
+uploads/
