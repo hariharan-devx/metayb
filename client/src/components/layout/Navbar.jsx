@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { categoryApi } from "../../api/categoryApi";
 import { CartContext } from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
 import { authApi } from "../../api/authApi";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -33,7 +32,7 @@ const Navbar = () => {
     await authApi.logout();
 
     setIsLoggedIn(false);
-
+    localStorage.removeItem("isLoggedIn");
     navigate("/");
   };
 
