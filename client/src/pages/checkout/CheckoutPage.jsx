@@ -28,7 +28,6 @@ const CheckoutPage = () => {
       <h3 className="mb-4">Checkout</h3>
 
       <div className="row">
-        {/* Shipping Address */}
         <div className="col-md-6">
           <div className="card mb-4">
             <div className="card-body">
@@ -45,7 +44,6 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Order Summary */}
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">

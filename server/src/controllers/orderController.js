@@ -9,7 +9,7 @@ import {
   getMyOrdersQuery,
 } from "../dbOperations/orderStatements.js";
 
-export const createOrder = asyncHandler(async (req, res) => {
+export const createOrder = asyncHandler(async (req, res, next) => {
   const { shipping_address } = req.body;
   const user_id = req.user.id;
 
