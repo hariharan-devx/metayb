@@ -40,18 +40,15 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
       <div className="container">
-        {/* Logo */}
         <Link className="navbar-brand fw-bold" to="/">
           LiquorShop
         </Link>
 
-        {/* Toggle button */}
         <button className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          {/* Categories CENTER */}
           <ul className="navbar-nav mx-auto">
             {categories.map((cat) => (
               <li className="nav-item px-2" key={cat.id}>
@@ -62,7 +59,6 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Right side buttons */}
           <div className="d-flex">
             {!isLoggedIn ? (
               <>
