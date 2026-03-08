@@ -13,13 +13,19 @@ import authRoue from "./src/routes/authRoute.js";
 import categoryRoute from "./src/routes/categoryRoute.js";
 import productRoute from "./src/routes/productRoute.js";
 import cartRoute from "./src/routes/cartRoute.js";
+import orderRoute from "./src/routes/orderRoute.js";
+import webhookRoute from "./src/routes/webhookRoute.js";
 
 let app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
 app.use(
   cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "http://localhost:5173",
     credentials: true,
   }),
 );
@@ -31,6 +37,7 @@ let limitter = rateLimit({
 });
 
 app.use("/", limitter);
+app.use("/webhook", express.raw({ type: "application/json" }), webhookRoute);
 app.use(express.json({ limit: "10kb" }));
 app.use(cookieParser());
 app.use(morgan("dev"));
@@ -44,6 +51,7 @@ app.use(authRoue);
 app.use(categoryRoute);
 app.use(productRoute);
 app.use(cartRoute);
+app.use(orderRoute);
 
 app.use((req, res, next) => {
   const err = new CustomError(404, `Can't find ${req.originalUrl} on the server!`);

@@ -6,7 +6,7 @@ import { createCategory, listCategory } from "../controllers/categoryController.
 
 const router = express.Router();
 
+router.get("/category/list-category", listCategory);
 router.post("/category/create-category", authMiddleware, validateRequest(createCategorySchema), createCategory);
-router.get("/category/list-category", authMiddleware, listCategory);
 
 export default router;

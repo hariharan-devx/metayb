@@ -12,6 +12,9 @@ import { fileUpload } from "../middlewares/uploadMiddleware.js";
 
 const router = express.Router();
 
+router.get("/product/list-product", listProduct);
+router.get("/product/list-product/:id", listProductById);
+router.get("/product/list-product-by-category/:id", listProductByCategory);
 router.post(
   "/product/create-product",
   authMiddleware,
@@ -19,8 +22,5 @@ router.post(
   fileUpload.single("image"),
   createProduct,
 );
-router.get("/product/list-product", authMiddleware, listProduct);
-router.get("/product/list-product/:id", authMiddleware, listProductById);
-router.get("/product/list-product-by-category/:id", authMiddleware, listProductByCategory);
 
 export default router;

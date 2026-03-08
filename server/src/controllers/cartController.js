@@ -5,7 +5,7 @@ import {
   addToCartQuery,
   checkExisitingCartQuery,
   getCartQuery,
-  getProductQueryQuery,
+  getProductQuery,
   updateExistingCartQuery,
   updateCartQuery,
   checkCartIdQuery,
@@ -16,7 +16,7 @@ export const addToCart = asyncHandler(async (req, res, next) => {
   const { product_id, quantity } = req.body;
   const user_id = req.user.id;
 
-  const [product] = await db.query(getProductQueryQuery, [product_id]);
+  const [product] = await db.query(getProductQuery, [product_id]);
 
   if (!product.length) {
     return next(new CustomError(404, "Product not found"));
@@ -45,10 +45,6 @@ export const getCart = asyncHandler(async (req, res) => {
 
   const [cart] = await db.query(getCartQuery, [user_id]);
 
-  if (!cart || !cart.length) {
-    return next(new CustomError(404, "Cart is empty"));
-  }
-
   res.json({
     status: "success",
     cart,
@@ -63,6 +59,17 @@ export const updateCart = asyncHandler(async (req, res, next) => {
 
   if (!cart.length) {
     return next(new CustomError(404, "Cart not found"));
+  }
+
+  const product_id = cart[0].product_id;
+
+  const [product] = await db.query(getProductQuery, [product_id]);
+  if (!product.length) {
+    return next(new CustomError(404, "Product not found"));
+  }
+
+  if (quantity > product[0].stock) {
+    return next(new CustomError(400, "Insufficient stock"));
   }
 
   const [updateCart] = await db.query(updateCartQuery, [quantity, cart_id, user_id]);

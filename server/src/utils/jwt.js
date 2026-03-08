@@ -13,8 +13,8 @@ export const generateToken = (user, statusCode, res) => {
     maxAge: process.env.JWT_EXPIRES,
     httpOnly: true,
     sameSite: "lax",
+    path: "/",
   };
-  if (process.env.NODE_ENV === "prod") options.secure = true;
 
   res.cookie("jwt", token, options);
 
