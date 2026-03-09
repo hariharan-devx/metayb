@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { CartContext } from "../../context/CartContext";
 import { orderApi } from "../../api/orderApi";
+import { cartApi } from "../../api/cartApi";
 
 const CheckoutPage = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, fetchCart } = useContext(CartContext);
 
   const [shippingAddress, setShippingAddress] = useState("");
 
@@ -17,6 +18,18 @@ const CheckoutPage = () => {
       });
       if (res.status === "success") {
         window.location.href = res.checkout_url;
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const deleteCart = async (id) => {
+    try {
+      const res = await cartApi.removeItem(id);
+      if (res.status === "success") {
+        toast.success(res.message);
+        fetchCart();
       }
     } catch (error) {
       toast.error(error.message);
@@ -56,6 +69,10 @@ const CheckoutPage = () => {
                   </span>
 
                   <span>₹ {item.total}</span>
+                  <button className="btn btn-danger mt-3" onClick={() => deleteCart(item.id)}>
+                    {" "}
+                    Delete
+                  </button>
                 </div>
               ))}
 
