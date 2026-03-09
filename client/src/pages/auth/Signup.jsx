@@ -33,11 +33,10 @@ const Signup = () => {
         toast.success(res.message);
         navigate("/login");
       } else {
-        setError(res.message);
+        toast.error(res.message);
       }
     } catch (err) {
-      console.error(err);
-      setError(err.response?.data?.message || "Something went wrong");
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
